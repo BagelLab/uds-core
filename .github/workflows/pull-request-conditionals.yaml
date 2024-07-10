@@ -2,18 +2,15 @@ name: Filter
 
 # This workflow is triggered on pull requests
 on:
-  workflow_run:
-    workflows: ["PR Trigger"]
-    types:
-      - completed
+  pull_request:
+    # milestoned is added here as a workaround for release-please not triggering PR workflows (PRs should be added to a milestone to trigger the workflow).
+    types: [milestoned, opened, reopened, synchronize]
 
 # Permissions for the GITHUB_TOKEN used by the workflow.
 permissions:
   id-token: write # Needed for OIDC-related operations.
   contents: read # Allows reading the content of the repository.
   pull-requests: read # Allows reading pull request metadata.
-  actions: read # Allows reading artifacts from other workflow runs
-  statuses: write # Allows writing action statuses
 
 # Default settings for all run commands in the workflow jobs.
 defaults:
@@ -22,38 +19,14 @@ defaults:
 
 # Abort prior jobs in the same workflow / PR
 concurrency:
-  group: test-${{ github.event.workflow_run.head_branch }}
+  group: test-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  pr-info:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download PR info artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: pr_info
-          run-id: ${{ github.event.workflow_run.id }} # Pulls artifact from the PR workflow run
-          github-token: ${{ github.token }}
-      - name: Read PR info
-        id: read-info
-        run: echo "PR_SHA=$(cat pr_sha.txt)" >> $GITHUB_OUTPUT
-    outputs:
-      prSHA: ${{ steps.read-info.outputs.PR_SHA }}
-
   lint-check:
-    needs: pr-info
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          ref: ${{ needs.pr-info.outputs.prSHA }}
-      - name: Mark Check as Started
-        uses: ./.github/actions/status-checks
-        with:
-          status: "pending"
-          sha: "${{ needs.pr-info.outputs.prSHA }}"
-          name: ${{ github.job }}
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
       - name: Use Node.js latest
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         with:
@@ -63,22 +36,13 @@ jobs:
       - name: Install UDS CLI
         shell: bash
         # renovate: datasource=github-tags depName=defenseunicorns/uds-cli versioning=semver
-        run: brew install defenseunicorns/tap/uds@0.11.2
+        run: brew install defenseunicorns/tap/uds@0.12.0
       - name: Run Formatting Checks
         run: uds run lint-check --no-progress
-      - name: Mark Check Result
-        if: always()
-        uses: ./.github/actions/status-checks
-        with:
-          status: ${{ job.status == 'success' && 'success' || job.status == 'failure' && 'failure' || 'error' }}
-          sha: ${{ needs.pr-info.outputs.prSHA }}
-          name: ${{ github.job }}
 
   # This job checks if there are changes in specific paths source packages.
   check-paths:
-    needs: 
-      - lint-check
-      - pr-info
+    needs: lint-check
     runs-on: ubuntu-latest
     name: Select Jobs
     outputs:
@@ -87,12 +51,6 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-      - name: Mark Check as Started
-        uses: ./.github/actions/status-checks
-        with:
-          status: "pending"
-          sha: "${{ needs.pr-info.outputs.prSHA }}"
-          name: ${{ github.job }}
 
       # Uses a custom action to filter paths for source packages.
       - name: Check src paths
@@ -100,25 +58,15 @@ jobs:
         uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3
         with:
           filters: .github/filters.yaml
-          ref: ${{ needs.pr-info.outputs.prSHA }}
-      - name: Mark Check Result
-        if: always()
-        uses: ./.github/actions/status-checks
-        with:
-          status: ${{ job.status == 'success' && 'success' || job.status == 'failure' && 'failure' || 'error' }}
-          sha: ${{ needs.pr-info.outputs.prSHA }}
-          name: ${{ github.job }}
 
   # This job triggers a separate workflow for each changed source package, if any.
   run-package-test:
-    needs: 
-      - check-paths
-      - pr-info
+    needs: check-paths
     name: Schedule
     strategy:
       matrix:
         package: ${{ fromJSON(needs.check-paths.outputs.packages) }}
-        flavor: [upstream, registry1]
+        flavor: [upstream, registry1, unicorn]
         test_type: [install]
         include:
           - package: all
@@ -127,10 +75,13 @@ jobs:
           - package: all
             flavor: upstream
             test_type: upgrade
+          # Commented out until unicorn flavor has a published release
+          # - package: all
+          #   flavor: unicorn
+          #   test_type: upgrade
     uses: ./.github/workflows/test.yaml
     with:
       package: ${{ matrix.package }}
       flavor: ${{ matrix.flavor }}
       test_type: ${{ matrix.test_type }}
-      sha: ${{ needs.pr-info.outputs.prSHA }}
     secrets: inherit # Inherits all secrets from the parent workflow.

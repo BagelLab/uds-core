@@ -1,7 +1,22 @@
 name: Test packages
 
 on:
-  # Triggered by pull-request-conditionals.yaml
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      package:
+        type: string
+        description: "The name of the source package to test"
+        required: true
+      flavor:
+        type: string
+        description: "Flavor of the source package to test"
+        required: true
+      test_type:
+        type: string
+        description: "The type of test to perform"
+        required: true
+    # Triggered by pull-request-conditionals.yaml
   workflow_call:
     inputs:
       package:
@@ -16,14 +31,10 @@ on:
         type: string
         description: "The type of test to perform"
         required: true
-      sha:
-        type: string
-        description: "The SHA to checkout and test with"
-        required: true
 
 permissions:
   contents: read
-  statuses: write # Allows writing action statuses
+  id-token: write  # This is needed for OIDC federation.
 
 jobs:
   test:
@@ -36,14 +47,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          ref: ${{ inputs.sha }}
-      - name: Mark Check as Started
-        uses: ./.github/actions/status-checks
-        with:
-          status: "pending"
-          sha: ${{ inputs.sha }}
-          name: "Schedule (${{inputs.package}}, ${{inputs.flavor}}, ${{inputs.test_type}}) / Test"
 
       - name: Environment setup
         uses: ./.github/actions/setup
@@ -51,6 +54,7 @@ jobs:
           registry1Username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
           registry1Password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
           ghToken: ${{ secrets.GITHUB_TOKEN }}
+          chainguardIdentity: ${{ secrets.CHAINGUARD_IDENTITY }}
 
       - name: Test a single source package
         if: ${{ inputs.package != 'all' && inputs.test_type == 'install' }}
@@ -73,11 +77,3 @@ jobs:
         uses: ./.github/actions/save-logs
         with:
           suffix: -${{ inputs.test_type }}-${{ inputs.package }}-${{ inputs.flavor }}
-
-      - name: Mark Check Result
-        if: always()
-        uses: ./.github/actions/status-checks
-        with:
-          status: ${{ job.status == 'success' && 'success' || job.status == 'failure' && 'failure' || 'error' }}
-          sha: ${{ inputs.sha }}
-          name: "Schedule (${{inputs.package}}, ${{inputs.flavor}}, ${{inputs.test_type}}) / Test"

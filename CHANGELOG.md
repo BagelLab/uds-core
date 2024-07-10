@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.23.2](https://github.com/BagelLab/uds-core/compare/v0.23.1...v0.23.2) (2024-07-10)
+
+
+### Bug Fixes
+
+* comment out debug ([bdc8677](https://github.com/BagelLab/uds-core/commit/bdc86777d6f06bbb09602185338d6d1c1fe269b9))
+* id-token ([5a78de7](https://github.com/BagelLab/uds-core/commit/5a78de7ec926a3ebe82771a5713ac2ff4841271f))
+
 ## [0.23.1](https://github.com/BagelLab/uds-core/compare/v0.23.0...v0.23.1) (2024-07-10)
 
 

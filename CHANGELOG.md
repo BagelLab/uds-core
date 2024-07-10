@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.23.3](https://github.com/BagelLab/uds-core/compare/v0.23.2...v0.23.3) (2024-07-10)
+
+
+### Bug Fixes
+
+* workflow silliness ([5870a77](https://github.com/BagelLab/uds-core/commit/5870a773b91e96a2f8bf616be2abedbe60263f86))
+
 ## [0.23.2](https://github.com/BagelLab/uds-core/compare/v0.23.1...v0.23.2) (2024-07-10)
 
 

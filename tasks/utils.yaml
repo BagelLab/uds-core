@@ -23,6 +23,6 @@ tasks:
             repo="${repo}/snapshots"
           fi
           echo "${repo}"
-        # mute: true
+        mute: true
         setVariables:
           - name: TARGET_REPO

@@ -13,7 +13,8 @@ jobs:
     strategy:
       matrix:
         flavor: [upstream, registry1, unicorn]
-    runs-on: "uds-ubuntu-big-boy-8-core"
+      fail-fast: false
+    runs-on: "ubuntu-latest"
     name: Publish packages
 
     permissions:

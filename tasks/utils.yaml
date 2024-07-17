@@ -15,12 +15,12 @@ tasks:
           repo="${BASE_REPO}"
           # unicorn flavor = private repository
           if [ "${FLAVOR}" = "unicorn" ]; then
-            repo+=/private
+            repo="${repo}/private"
           fi
-          repo+=/uds
+          repo="${repo}/uds"
           # snapshots = snapshot repository
           if [ "${SNAPSHOT}" = "true" ]; then
-            repo+=/snapshots
+            repo="${repo}/snapshots"
           fi
           echo "${repo}"
         # mute: true

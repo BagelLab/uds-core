@@ -145,6 +145,10 @@ export interface Allow {
    */
   ports?: number[];
   /**
+   * Custom generated policy CIDR
+   */
+  remoteCidr?: string;
+  /**
    * Custom generated remote selector for the policy
    */
   remoteGenerated?: RemoteGenerated;
@@ -250,6 +254,10 @@ export interface AdvancedHTTP {
    * passthrough gateway.
    */
   match?: AdvancedHTTPMatch[];
+  /**
+   * A HTTP rule can either return a direct_response, redirect or forward (default) traffic.
+   */
+  redirect?: Redirect;
   /**
    * Retry policy for HTTP requests.
    */
@@ -396,6 +404,50 @@ export interface PurpleURI {
 }
 
 /**
+ * A HTTP rule can either return a direct_response, redirect or forward (default) traffic.
+ */
+export interface Redirect {
+  /**
+   * On a redirect, overwrite the Authority/Host portion of the URL with this value.
+   */
+  authority?: string;
+  /**
+   * On a redirect, dynamically set the port: * FROM_PROTOCOL_DEFAULT: automatically set to 80
+   * for HTTP and 443 for HTTPS.
+   *
+   * Valid Options: FROM_PROTOCOL_DEFAULT, FROM_REQUEST_PORT
+   */
+  derivePort?: DerivePort;
+  /**
+   * On a redirect, overwrite the port portion of the URL with this value.
+   */
+  port?: number;
+  /**
+   * On a redirect, Specifies the HTTP status code to use in the redirect response.
+   */
+  redirectCode?: number;
+  /**
+   * On a redirect, overwrite the scheme portion of the URL with this value.
+   */
+  scheme?: string;
+  /**
+   * On a redirect, overwrite the Path portion of the URL with this value.
+   */
+  uri?: string;
+}
+
+/**
+ * On a redirect, dynamically set the port: * FROM_PROTOCOL_DEFAULT: automatically set to 80
+ * for HTTP and 443 for HTTPS.
+ *
+ * Valid Options: FROM_PROTOCOL_DEFAULT, FROM_REQUEST_PORT
+ */
+export enum DerivePort {
+  FromProtocolDefault = "FROM_PROTOCOL_DEFAULT",
+  FromRequestPort = "FROM_REQUEST_PORT",
+}
+
+/**
  * Retry policy for HTTP requests.
  */
 export interface Retries {
@@ -538,7 +590,7 @@ export interface Sso {
    */
   enabled?: boolean;
   /**
-   * The client sso group type
+   * The client SSO group type
    */
   groups?: Groups;
   /**
@@ -550,10 +602,18 @@ export interface Sso {
    */
   protocol?: Protocol;
   /**
+   * Protocol Mappers to configure on the client
+   */
+  protocolMappers?: ProtocolMapper[];
+  /**
+   * Defines whether the client requires a client secret for authentication
+   */
+  publicClient?: boolean;
+  /**
    * Valid URI pattern a browser can redirect to after a successful login. Simple wildcards
    * are allowed such as 'https://unicorns.uds.dev/*'
    */
-  redirectUris: string[];
+  redirectUris?: string[];
   /**
    * Root URL appended to relative URLs
    */
@@ -571,6 +631,10 @@ export interface Sso {
    */
   secretTemplate?: { [key: string]: string };
   /**
+   * Enables the standard OpenID Connect redirect based authentication with authorization code.
+   */
+  standardFlowEnabled?: boolean;
+  /**
    * Allowed CORS origins. To permit all origins of Valid Redirect URIs, add '+'. This does
    * not include the '*' wildcard though. To permit all origins, explicitly add '*'.
    */
@@ -586,21 +650,46 @@ export enum ClientAuthenticatorType {
 }
 
 /**
- * The client sso group type
+ * The client SSO group type
  */
 export interface Groups {
   /**
-   * List of groups allowed to access to client
+   * List of groups allowed to access the client
    */
   anyOf?: string[];
 }
 
 /**
  * Specifies the protocol of the client, either 'openid-connect' or 'saml'
+ *
+ * Protocol of the mapper
  */
 export enum Protocol {
   OpenidConnect = "openid-connect",
   Saml = "saml",
+}
+
+export interface ProtocolMapper {
+  /**
+   * Configuration options for the mapper.
+   */
+  config?: { [key: string]: string };
+  /**
+   * Whether user consent is required for this mapper
+   */
+  consentRequired?: boolean;
+  /**
+   * Name of the mapper
+   */
+  name: string;
+  /**
+   * Protocol of the mapper
+   */
+  protocol: Protocol;
+  /**
+   * Protocol Mapper type of the mapper
+   */
+  protocolMapper: string;
 }
 
 export interface Status {

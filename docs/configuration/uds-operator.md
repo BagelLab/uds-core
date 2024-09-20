@@ -21,6 +21,7 @@ The UDS Operator plays a pivotal role in managing the lifecycle of UDS Package C
 - **SSO Group Authentication:**
   - Group authentication determines who can access the application based on keycloak group membership.
   - At this time `anyOf` allows defining a list of groups, a user must belong to at least one of them.
+  - Custom client `protocolMapper`'s that will be created alongside the client and added to the client's dedicated scope.
 - **Authservice Protection:**
   - Authservice authentication provides application agnostic SSO for applications that opt-in.
   {{% alert-caution %}}
@@ -61,7 +62,7 @@ spec:
         port: 9411
         description: "Tempo"
 
-  # SSO allows for the creation of Keycloak clients and with automatic secret generation
+  # SSO allows for the creation of Keycloak clients and with automatic secret generation and protocolMappers
   sso:
     - name: Grafana Dashboard
       clientId: uds-core-admin-grafana
@@ -70,6 +71,22 @@ spec:
       groups:
         anyOf:
           - /UDS Core/Admin
+      # Define protocolMappers to be created as dedicated scopes for the client
+      protocolMappers:
+        - name: username
+          protocol: "openid-connect"
+          protocolMapper: "oidc-usermodel-property-mapper"
+          config:
+            user.attribute: "username"
+            claim.name: "username"
+            userinfo.token.claim: "true"
+        - name: email
+          protocol: "openid-connect"
+          protocolMapper: "oidc-usermodel-property-mapper"
+          config:
+            user.attribute: "email"
+            claim.name: "email"
+            userinfo.token.claim: "true"
 ```
 
 ### Example UDS Package CR with SSO Templating
@@ -167,6 +184,42 @@ variables:
 ```
 
 See [configuring Istio Ingress](https://uds.defenseunicorns.com/core/configuration/istio/ingress/#configure-domain-name-and-tls-for-istio-gateways) for the relevant documentation on configuring ingress certificates.
+
+### Creating a UDS Package with a Device Flow client
+
+Some applications may not have a web UI / server component to login to and may instead grant OAuth tokens to devices.  This flow is known as the [OAuth 2.0 Device Authorization Grant](https://oauth.net/2/device-flow/) and is supported in a UDS Package with the following configuration:
+
+```yaml
+apiVersion: uds.dev/v1alpha1
+kind: Package
+metadata:
+  name: fulcio
+  namespace: fulcio-system
+spec:
+  sso:
+    - name: Sigstore Login
+      clientId: sigstore
+      standardFlowEnabled: false
+      publicClient: true
+      attributes:
+        oauth2.device.authorization.grant.enabled: "true"
+```
+
+This configuration does not create a secret in the cluster and instead tells the UDS Operator to create a public client (one that requires no auth secret) that enables the `oauth2.device.authorization.grant.enabled` flow and disables the standard redirect auth flow.  Because this creates a public client configuration that deviates from this is limited - if your application requires both the Device Authorization Grant and the standard flow this is currently not supported without creating two separate clients.
+
+### SSO Client Attribute Validation
+
+The SSO spec supports a subset of the Keycloak attributes for clients, but does not support all of them. The current supported attributes are:
+- oidc.ciba.grant.enabled
+- backchannel.logout.session.required
+- backchannel.logout.revoke.offline.tokens
+- post.logout.redirect.uris
+- oauth2.device.authorization.grant.enabled
+- pkce.code.challenge.method
+- client.session.idle.timeout
+- saml.assertion.signature
+- saml.client.signature
+- saml_assertion_consumer_url_post
 
 ## Exemption
 

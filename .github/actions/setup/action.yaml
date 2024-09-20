@@ -19,13 +19,14 @@ runs:
   using: "composite"
   steps:
     - name: Use Node.js latest
-      uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+      uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
       with:
         node-version: 20
 
     - name: Install k3d
       shell: bash
-      run: curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | TAG=v5.6.0 bash
+      # renovate: datasource=github-tags depName=k3d-io/k3d versioning=semver
+      run: curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | TAG=v5.7.4 bash
 
     - name: Set up Homebrew
       uses: Homebrew/actions/setup-homebrew@master
@@ -33,7 +34,13 @@ runs:
     - name: Install UDS CLI
       shell: bash
       # renovate: datasource=github-tags depName=defenseunicorns/uds-cli versioning=semver
-      run: brew install defenseunicorns/tap/uds@0.12.0
+      run: brew install defenseunicorns/tap/uds@0.15.0
+
+    - name: Install Lula
+      uses: defenseunicorns/lula-action/setup@badad8c4b1570095f57e66ffd62664847698a3b9 # v0.0.1
+      with:
+        # renovate: datasource=github-tags depName=defenseunicorns/lula versioning=semver-coerced
+        version: v0.7.0
 
     - name: Iron Bank Login
       if: ${{ inputs.registry1Username != '' }}
@@ -45,7 +52,7 @@ runs:
 
     - name: Chainguard Login
       if: ${{ inputs.chainguardIdentity != '' }}
-      uses: chainguard-dev/setup-chainctl@fc62b08dfd3179dd694b50f672bc371f878fbd1e # v0.2.1
+      uses: chainguard-dev/setup-chainctl@f52718d822dc73d21a04ef2082822c4a203163b3 # v0.2.2
       with:
         identity: ${{ inputs.chainguardIdentity }}
 

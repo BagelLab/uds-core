@@ -14,7 +14,7 @@ spec:
   network:
     allow:
       - direction: Ingress
-        podSelector:
+        selector:
           app.kubernetes.io/name: promtail
         remoteNamespace: monitoring
         remoteSelector:
@@ -23,16 +23,9 @@ spec:
         description: "Prometheus Metrics"
 
       - direction: Egress
-        podSelector:
+        selector:
           app.kubernetes.io/name: promtail
         remoteGenerated: KubeAPI
-
-      - direction: Egress
-        remoteNamespace: tempo
-        remoteSelector:
-          app.kubernetes.io/name: tempo
-        port: 9411
-        description: "Tempo"
 
       - direction: Egress
         selector:

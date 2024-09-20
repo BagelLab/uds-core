@@ -4,9 +4,6 @@ variables:
 
   - name: PKG
 
-  - name: K3D_IMAGE
-    default: "rancher/k3s:v1.29.5-k3s1"
-
 includes:
   - create: ./tasks/create.yaml
   - setup: ./tasks/setup.yaml
@@ -105,10 +102,28 @@ tasks:
     actions:
       - task: test:uds-core
 
+  - name: test-uds-core-ha
+    description: "Build and test UDS Core"
+    actions:
+      - cmd: docker stop my-postgres && docker rm my-postgres || true
+      - cmd: docker network create k3d-uds || true
+      - cmd: docker run -p 5432:5432 --network=k3d-uds --name my-postgres -e POSTGRES_DB=keycloak -e POSTGRES_USER=keycloak -e POSTGRES_PASSWORD=password -d postgres
+      - task: test:uds-core-ha
+
   - name: test-uds-core-upgrade
     description: "Test an upgrade from the latest released UDS Core package to current branch"
     actions:
       - task: test:uds-core-upgrade
+
+  - name: test-compliance-validate
+    description: "Validate Compliance of UDS Core to produce Assessment Results"
+    actions:
+      - task: test:compliance-validate
+
+  - name: test-compliance-evaluate
+    description: "Evaluate Compliance of UDS Core against an established threshold"
+    actions:
+      - task: test:compliance-evaluate
 
   - name: lint-check
     description: "Run linting checks"
@@ -119,3 +134,7 @@ tasks:
     description: "Fix linting issues"
     actions:
       - task: lint:fix
+
+  - name: lint-oscal
+    actions:
+      - task: lint:oscal

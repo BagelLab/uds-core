@@ -2,15 +2,21 @@ image:
   # The Keycloak image repository
   repository: quay.io/keycloak/keycloak
   # Overrides the Keycloak image tag whose default is the chart appVersion
-  tag: "24.0.5"
+  tag: "25.0.5"
   # The Keycloak image pull policy
   pullPolicy: IfNotPresent
 
 # renovate: datasource=github-tags depName=defenseunicorns/uds-identity-config versioning=semver
-configImage: ghcr.io/defenseunicorns/uds/identity-config:0.5.0
+configImage: ghcr.io/defenseunicorns/uds/identity-config:0.6.3
 
 # The public domain name of the Keycloak server
 domain: "###ZARF_VAR_DOMAIN###"
+
+# Additional Istio Gateways that expose Keycloak, to allow for client cert usage
+# A prefix of `istio-` is required for namespaces to prevent accidental misconfiguration
+additionalGatewayNamespaces: []
+# Example
+# - "istio-login-gateway"
 
 # The primary Keycloak realm
 realm: uds
@@ -60,6 +66,9 @@ devMode: true
 
 # Enable debug logging for keycloak and quarkus
 debugMode: false
+
+# Enable JSON logging format for Keycloak
+jsonLogFormat: true
 
 # Enable SMTP networkPolicy and config
 smtp:
@@ -165,6 +174,12 @@ postgresql:
   host: ""
   # Port the database is listening on
   port: 5432
+  egressCidr: ""
+  # Configure internal postgresql deployment, requires keycloak not be deployed in dev-mode
+  internal:
+    enabled: false
+    remoteSelector: {}
+    remoteNamespace: ""
 
 serviceMonitor:
   # If `true`, a ServiceMonitor resource for the prometheus-operator is created
@@ -184,7 +199,7 @@ serviceMonitor:
   # The path at which metrics are served
   path: /metrics
   # The Service port at which metrics are served
-  port: http
+  port: metrics
   # added by Big Bang to support Istio mTLS
   scheme: ""
   tlsConfig: {}

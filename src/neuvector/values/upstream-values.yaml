@@ -1,5 +1,6 @@
 registry: docker.io
-tag: "5.3.3"
+# renovate: datasource=docker depName=docker.io/neuvector/controller versioning=docker
+tag: "5.3.4"
 manager:
   image:
     repository: neuvector/manager

@@ -9,6 +9,9 @@ ignore:
   - '**/chart/templates**'
   - 'node_modules/**'
   - 'dist/**'
+  - 'src/pepr/uds-operator-config/templates**'
+  - '.codespellrc'
+  - '.lintstagedrc.json'
 
 rules:
   anchors: enable

@@ -94,6 +94,7 @@
     },
     {
       "matchFileNames": [".github/workflows/**", ".github/actions/**"],
+      "excludeDatasources": ["git-tags"],
       "excludePackageNames": ["zarf-dev/zarf", "defenseunicorns/uds-cli", "defenseunicorns/lula"],
       "groupName": "githubactions",
       "commitMessageTopic": "githubactions",

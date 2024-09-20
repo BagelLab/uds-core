@@ -94,8 +94,7 @@
     },
     {
       "matchFileNames": [".github/workflows/**", ".github/actions/**"],
-      "excludeDatasources": ["git-tags"],
-      "excludePackageNames": ["zarf-dev/zarf", "defenseunicorns/uds-cli", "defenseunicorns/lula"],
+      "matchPackageNames": ["*", "!defenseunicorns/uds-cli", "!defenseunicorns/zarf", "!defenseunicorns/lula", "!k3d-io/k3d"],
       "groupName": "githubactions",
       "commitMessageTopic": "githubactions",
       "pinDigests": true

@@ -4,47 +4,47 @@ metadata:
   description: "UDS Core"
   authors: "Defense Unicorns - Product"
   # x-release-please-start-version
-  version: "0.27.3"
+  version: "0.28.0"
   # x-release-please-end
 
 components:
   - name: uds-operator-config
     required: true
     import:
-      path: ../../src/pepr
+      path: ../base
 
   # CRDs
   - name: prometheus-operator-crds
     required: true
     import:
-      path: ../../src/prometheus-stack
+      path: ../base
 
   # Istio
   - name: istio-controlplane
     required: true
     import:
-      path: ../../src/istio
+      path: ../base
 
   - name: istio-admin-gateway
     required: true
     import:
-      path: ../../src/istio
+      path: ../base
 
   - name: istio-tenant-gateway
     required: true
     import:
-      path: ../../src/istio
+      path: ../base
 
   - name: istio-passthrough-gateway
     required: false
     import:
-      path: ../../src/istio
+      path: ../base
 
   # Pepr the world
   - name: pepr-uds-core
     required: true
     import:
-      path: ../../src/pepr
+      path: ../base
 
   # Metrics Server
   - name: metrics-server
@@ -56,7 +56,7 @@ components:
   - name: keycloak
     required: true
     import:
-      path: ../../src/keycloak
+      path: ../identity-authorization
 
   # Neuvector
   - name: neuvector
@@ -76,11 +76,11 @@ components:
     import:
       path: ../../src/prometheus-stack
 
-  # Promtail
-  - name: promtail
+  # Vector
+  - name: vector
     required: true
     import:
-      path: ../../src/promtail
+      path: ../../src/vector
 
   # Grafana
   - name: grafana
@@ -92,7 +92,7 @@ components:
   - name: authservice
     required: true
     import:
-      path: ../../src/authservice
+      path: ../identity-authorization
 
   # UDS Runtime
   - name: uds-runtime

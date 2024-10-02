@@ -27,8 +27,6 @@ export const UDSConfig = {
 
   // Redis URI for Authservice
   authserviceRedisUri,
-
-  isIdentityDeployed: false,
 };
 
 // configure subproject logger

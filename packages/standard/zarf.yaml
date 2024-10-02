@@ -11,40 +11,40 @@ components:
   - name: uds-operator-config
     required: true
     import:
-      path: ../base
+      path: ../../src/pepr
 
   # CRDs
   - name: prometheus-operator-crds
     required: true
     import:
-      path: ../base
+      path: ../../src/prometheus-stack
 
   # Istio
   - name: istio-controlplane
     required: true
     import:
-      path: ../base
+      path: ../../src/istio
 
   - name: istio-admin-gateway
     required: true
     import:
-      path: ../base
+      path: ../../src/istio
 
   - name: istio-tenant-gateway
     required: true
     import:
-      path: ../base
+      path: ../../src/istio
 
   - name: istio-passthrough-gateway
     required: false
     import:
-      path: ../base
+      path: ../../src/istio
 
   # Pepr the world
   - name: pepr-uds-core
     required: true
     import:
-      path: ../base
+      path: ../../src/pepr
 
   # Metrics Server
   - name: metrics-server
@@ -56,7 +56,7 @@ components:
   - name: keycloak
     required: true
     import:
-      path: ../identity-authorization
+      path: ../../src/keycloak
 
   # Neuvector
   - name: neuvector
@@ -92,7 +92,7 @@ components:
   - name: authservice
     required: true
     import:
-      path: ../identity-authorization
+      path: ../../src/authservice
 
   # UDS Runtime
   - name: uds-runtime

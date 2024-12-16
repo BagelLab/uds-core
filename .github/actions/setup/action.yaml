@@ -19,7 +19,7 @@ runs:
   using: "composite"
   steps:
     - name: Use Node.js latest
-      uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
+      uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
       with:
         node-version: 20
 
@@ -52,7 +52,7 @@ runs:
 
     - name: Chainguard Login
       if: ${{ inputs.chainguardIdentity != '' }}
-      uses: chainguard-dev/setup-chainctl@f52718d822dc73d21a04ef2082822c4a203163b3 # v0.2.2
+      uses: chainguard-dev/setup-chainctl@8d93dcbef466d3cf3533f67084f52eb74ef9d262 # v0.2.4
       with:
         identity: ${{ inputs.chainguardIdentity }}
 

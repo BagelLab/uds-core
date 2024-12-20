@@ -8,7 +8,7 @@ runs:
   using: composite
   steps:
     # This is current a stub for future logic that would auto-detect readiness
-    # In lieu of that, we require an engineer to review changes and manually add the `renovate: ready` label
+    # In lieu of that, we require an engineer to review changes and manually add the `renovate-ready` label
     - name: Check if PR has the ready label
       if: ${{ ! contains(github.event.pull_request.labels.*.name, 'renovate-ready') }}
       run: |

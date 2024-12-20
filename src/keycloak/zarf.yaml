@@ -4,7 +4,7 @@
 kind: ZarfPackageConfig
 metadata:
   name: uds-core-keycloak
-  description: "Keycloak"
+  description: "Keycloak Zarf"
 
 variables:
   - name: DOMAIN

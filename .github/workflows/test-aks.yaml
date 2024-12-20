@@ -7,7 +7,7 @@ on:
   schedule:
     - cron: '0 0 * * 0' # Every Sunday Midnight (UTC) / Saturday 5pm MT
   pull_request:
-    types: [milestoned, opened, reopened, synchronize, ready_for_review]
+    types: [milestoned, opened, reopened, synchronize, labeled]
     paths:
       - tasks/iac.yaml
       - .github/bundles/aks/*

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 > [!IMPORTANT]
 > This changelog only tracks changes across minor versions and is automatically generated, ensuring all commits are captured. The [GitHub Releases](https://github.com/defenseunicorns/uds-core/releases) provide a summary of changes for each release and list all patch releases as well.
 
+## [0.59.0](https://github.com/BagelLab/uds-core/compare/v0.58.0...v0.59.0) (2025-11-13)
+
+
+### Features
+
+* new version pt2 ([b55f500](https://github.com/BagelLab/uds-core/commit/b55f50015a8cbfb19ec95cdf9e40fd8d8ec5e27c))
+
 ## [0.58.0](https://github.com/BagelLab/uds-core/compare/v0.57.0...v0.58.0) (2025-11-13)
 
 

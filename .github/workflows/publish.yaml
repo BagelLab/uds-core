@@ -77,7 +77,7 @@ jobs:
           ZARF_ARCHITECTURE=arm64 uds run -f tasks/create.yaml k3d-standard-bundle --no-progress
           ZARF_ARCHITECTURE=arm64 uds run -f tasks/create.yaml k3d-slim-dev-bundle --no-progress --set FLAVOR=${{ matrix.flavor }}
 
-      # Standard Package by default tests full core
+      # Standard Package by default tests core
       - name: Test amd64 Bundle
         if: ${{ !inputs.snapshot }}
         run: |

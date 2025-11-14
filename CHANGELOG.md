@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 > [!IMPORTANT]
 > This changelog only tracks changes across minor versions and is automatically generated, ensuring all commits are captured. The [GitHub Releases](https://github.com/defenseunicorns/uds-core/releases) provide a summary of changes for each release and list all patch releases as well.
 
+## [0.60.0](https://github.com/BagelLab/uds-core/compare/v0.59.0...v0.60.0) (2025-11-14)
+
+
+### Bug Fixes
+
+* comment for patch workflows ([d3c1336](https://github.com/BagelLab/uds-core/commit/d3c1336600999563f2ef4c88d45a38026f3c6190))
+* committed release-please config for patches ([960dd99](https://github.com/BagelLab/uds-core/commit/960dd99b47a88818b7df4c3d8a70c5a0ac245a87))
+* handle upgrade version properly ([8b83386](https://github.com/BagelLab/uds-core/commit/8b833860df4f5a10bf21ca1bb33ef4a1fded205b))
+* release-please config ([690568a](https://github.com/BagelLab/uds-core/commit/690568a6b8277ceffaec2642de31a801591b2b58))
+* release-please config for patches ([b2d29e0](https://github.com/BagelLab/uds-core/commit/b2d29e0d32e2a72c3feb26464d56e561e381f150))
+* some crazy bug ([e96a8f9](https://github.com/BagelLab/uds-core/commit/e96a8f9f48f70cded492ee6fe5defafd82beea69))
+* task updates ([eae972c](https://github.com/BagelLab/uds-core/commit/eae972cfffe7394515ba3446a7ba67a486f69fa2))
+
+
+### Miscellaneous
+
+* less stub for publish ([1d84ff6](https://github.com/BagelLab/uds-core/commit/1d84ff69fe24044dd4b315fef9a38b74e9eef524))
+* update backport task and docs ([c5f33db](https://github.com/BagelLab/uds-core/commit/c5f33dbbcc55d04cc742baa46b2b79c192a4082c))
+
+
+### Documentation
+
+* update command example ([223391e](https://github.com/BagelLab/uds-core/commit/223391e3870f46c4b2c29a12fda8c463494e5e57))
+
 ## [0.59.0](https://github.com/BagelLab/uds-core/compare/v0.58.0...v0.59.0) (2025-11-13)
 
 

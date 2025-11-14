@@ -81,7 +81,7 @@ jobs:
         if: ${{ env.STUB_MODE == 'true' }}
         run: echo "[STUB] Would create standard packages and k3d bundles for flavors=${{ matrix.flavor }} on amd64/arm64"
 
-      # Standard Package by default tests full core
+      # Standard Package by default tests core
       - name: Test amd64 Bundle
         if: ${{ !inputs.snapshot && env.STUB_MODE != 'true' }}
         run: |

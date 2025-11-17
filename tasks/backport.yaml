@@ -59,7 +59,7 @@ tasks:
             C="$(echo "$COMMIT" | xargs)"
             echo "Cherry-picking ${C} into ${BRANCH}..."
 
-            # Suppress git output; on failure, show clear next steps instead.
+            # Suppress noisy git output; on failure, show clear next steps instead.
             if ! git cherry-pick -x "$C" >/dev/null 2>&1; then
               echo
               echo "======================================================================"
@@ -82,13 +82,7 @@ tasks:
               BODY="Backport of commit: ${COMMIT}"
 
               if command -v gh >/dev/null 2>&1; then
-                cat <<EOF
-                gh pr create \
-                  --title "${TITLE}" \
-                  --body "${BODY}" \
-                  --base "${RB}" \
-                  --head "${BRANCH}"
-                EOF
+                echo "  gh pr create --title \"${TITLE}\" --body \"${BODY}\" --base \"${RB}\" --head \"${BRANCH}\""
               else
                 echo "  # After pushing, open a PR with base=${RB} and compare=${BRANCH}"
               fi
@@ -116,16 +110,8 @@ tasks:
 
             if [[ "${AUTO_PR}" == "true" ]] && command -v gh >/dev/null 2>&1; then
               gh pr create --title "${TITLE}" --body "${BODY}" --base "${RB}" --head "${BRANCH}" >/dev/null 2>&1 || true
-              echo "   PR opened via: gh pr create --title \"${TITLE}\" --body \"${BODY}\" --base \"${RB}\" --head \"${BRANCH}\""
             else
-              echo "To open a PR, run (copy/paste):"
-              cat <<EOF
-              gh pr create \
-                --title "${TITLE}" \
-                --body "${BODY}" \
-                --base "${RB}" \
-                --head "${BRANCH}"
-              EOF
+              echo "  # After pushing, open a PR with base=${RB} and compare=${BRANCH}"
             fi
           done
 

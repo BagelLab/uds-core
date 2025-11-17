@@ -4,7 +4,7 @@
 kind: ZarfPackageConfig
 metadata:
   name: uds-core-authservice
-  description: "UDS Core Authservice"
+  description: "UDS Authservice"
   url: https://github.com/istio-ecosystem/authservice
 
 components:

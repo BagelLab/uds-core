@@ -33,7 +33,7 @@ tasks:
           AUTO_PR='${{ .inputs.auto_pr }}'
           NAME="$(echo "$COMMIT" | xargs)"
 
-          git fetch origin --tags >/dev/null
+          git fetch origin --tags
 
           MINOR_LIST=()
           IFS=',' read -ra MINOR_LIST <<< "$TVS"
@@ -54,7 +54,7 @@ tasks:
             BRANCH="$(echo "$BRANCH" | tr '[:upper:]' '[:lower:]')"
 
             echo "Creating branch: ${BRANCH} from ${RB}"
-            git switch -c "${BRANCH}" "origin/${RB}" >/dev/null
+            git switch -c "${BRANCH}" "origin/${RB}"
 
             C="$(echo "$COMMIT" | xargs)"
             echo "Cherry-picking ${C} into ${BRANCH}..."
@@ -106,22 +106,16 @@ tasks:
             TITLE="${DEFAULT_TITLE} (backport-${MINOR})"
             BODY="Backport of commit: ${COMMIT}"
 
-            PR_URL=""
-
-            if [[ "${AUTO_PR}" == "true" ]] && command -v gh >/dev/null 2>&1; then
-              PR_URL=$(gh pr create --title "${TITLE}" --body "${BODY}" --base "${RB}" --head "${BRANCH}" --json url --jq .url 2>/dev/null || echo "")
-            fi
-
             echo "✅ Backport branch created and pushed: ${BRANCH} (base: ${RB})"
 
-            if [[ -n "${PR_URL}" ]]; then
-              echo "   PR: ${PR_URL}"
+            if [[ "${AUTO_PR}" == "true" ]] && command -v gh >/dev/null 2>&1; then
+              gh pr create --title "${TITLE}" --body "${BODY}" --base "${RB}" --head "${BRANCH}" >/dev/null 2>&1 || true
             else
               echo "  # After pushing, open a PR with base=${RB} and compare=${BRANCH}"
             fi
           done
 
           if [[ -n "$CURR_BRANCH" ]]; then
-            git switch "$CURR_BRANCH" >/dev/null
+            git switch "$CURR_BRANCH"
             echo "Returned to branch: $CURR_BRANCH"
           fi

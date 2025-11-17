@@ -6,7 +6,12 @@ tasks:
     actions:
       - description: "Create the K3d cluster"
         # renovate: datasource=docker depName=ghcr.io/defenseunicorns/packages/uds-k3d versioning=docker
-        cmd: "uds zarf package deploy oci://defenseunicorns/uds-k3d:0.19.1-airgap --confirm --no-progress"
+        cmd: |
+          if [ "${STUB_MODE}" = "true" ]; then
+            echo "[STUB] Would deploy uds-k3d (arch=${ZARF_ARCHITECTURE})"
+          else
+            uds zarf package deploy oci://defenseunicorns/uds-k3d:0.19.1-airgap --confirm --no-progress
+          fi
 
   - name: k3d-test-cluster
     actions:
@@ -14,7 +19,12 @@ tasks:
 
       - description: "Initialize the cluster with Zarf"
         # renovate: datasource=github-tags depName=zarf-dev/zarf versioning=semver
-        cmd: "uds zarf package deploy oci://ghcr.io/zarf-dev/packages/init:v0.64.0 --confirm --no-progress"
+        cmd: |
+          if [ "${STUB_MODE}" = "true" ]; then
+            echo "[STUB] Would deploy zarf init (arch=${ZARF_ARCHITECTURE})"
+          else
+            uds zarf package deploy oci://ghcr.io/zarf-dev/packages/init:v0.64.0 --confirm --no-progress
+          fi
 
   - name: ha-postgres
     actions:

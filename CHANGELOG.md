@@ -5,48 +5,6 @@ All notable changes to this project will be documented in this file.
 > [!IMPORTANT]
 > This changelog only tracks changes across minor versions and is automatically generated, ensuring all commits are captured. The [GitHub Releases](https://github.com/defenseunicorns/uds-core/releases) provide a summary of changes for each release and list all patch releases as well.
 
-## [0.57.0](https://github.com/BagelLab/uds-core/compare/v0.56.0...v0.57.0) (2025-11-17)
-
-
-### Features
-
-* new version ([9a842bd](https://github.com/BagelLab/uds-core/commit/9a842bd1e0a4e2725a1176e4302839461a1ee240))
-* new version pt2 ([b55f500](https://github.com/BagelLab/uds-core/commit/b55f50015a8cbfb19ec95cdf9e40fd8d8ec5e27c))
-* publish stub ([bd5d27e](https://github.com/BagelLab/uds-core/commit/bd5d27efc5832adee83b1af2c0c9c9bb6c28da5f))
-
-
-### Bug Fixes
-
-* backport logic ([473a4f3](https://github.com/BagelLab/uds-core/commit/473a4f3f3abcf67c71f9c97b42ce52278e23f461))
-* comment for patch workflows ([d3c1336](https://github.com/BagelLab/uds-core/commit/d3c1336600999563f2ef4c88d45a38026f3c6190))
-* committed release-please config for patches ([960dd99](https://github.com/BagelLab/uds-core/commit/960dd99b47a88818b7df4c3d8a70c5a0ac245a87))
-* example ([6b2a2ea](https://github.com/BagelLab/uds-core/commit/6b2a2ea4381de3dae009969eaef0db6aff30305a))
-* handle upgrade version properly ([8b83386](https://github.com/BagelLab/uds-core/commit/8b833860df4f5a10bf21ca1bb33ef4a1fded205b))
-* pull in dry-er version ([#113](https://github.com/BagelLab/uds-core/issues/113)) ([831f884](https://github.com/BagelLab/uds-core/commit/831f8842ea53f574bb38caf68d9fa13ded63ae9c))
-* release-please config ([690568a](https://github.com/BagelLab/uds-core/commit/690568a6b8277ceffaec2642de31a801591b2b58))
-* release-please config for patches ([b2d29e0](https://github.com/BagelLab/uds-core/commit/b2d29e0d32e2a72c3feb26464d56e561e381f150))
-* some crazy bug ([e96a8f9](https://github.com/BagelLab/uds-core/commit/e96a8f9f48f70cded492ee6fe5defafd82beea69))
-* task for PR output ([7a0fe57](https://github.com/BagelLab/uds-core/commit/7a0fe57d71a7231aa09c0b0e2949298acbf0f40f))
-* task updates ([eae972c](https://github.com/BagelLab/uds-core/commit/eae972cfffe7394515ba3446a7ba67a486f69fa2))
-* test comment ([ab3f69e](https://github.com/BagelLab/uds-core/commit/ab3f69e2e2d54e982d786fbe22d50d8da1f4e38b))
-* ux around backports with conflicts ([a941603](https://github.com/BagelLab/uds-core/commit/a941603d6f028a6d0cfe7c10ce264ec4e588866a))
-
-
-### Miscellaneous
-
-* iterate on conflicts ([c48a001](https://github.com/BagelLab/uds-core/commit/c48a0018461af8b00559c0e2b00aac55f953445f))
-* less stub for publish ([1d84ff6](https://github.com/BagelLab/uds-core/commit/1d84ff69fe24044dd4b315fef9a38b74e9eef524))
-* **main:** release 0.57.0 ([#85](https://github.com/BagelLab/uds-core/issues/85)) ([8a257c1](https://github.com/BagelLab/uds-core/commit/8a257c1b875065f33165debd362aae340ffd6ca6))
-* **main:** release 0.58.0 ([#86](https://github.com/BagelLab/uds-core/issues/86)) ([e65656d](https://github.com/BagelLab/uds-core/commit/e65656da423daa4569a9b37c136b2a0243324221))
-* **main:** release 0.59.0 ([#87](https://github.com/BagelLab/uds-core/issues/87)) ([a03a37e](https://github.com/BagelLab/uds-core/commit/a03a37e927797a6ac6c6dda5e73122f3ca87e923))
-* rework backport for failures ([6a6a846](https://github.com/BagelLab/uds-core/commit/6a6a8460ce75a64124786a7ab4f793a80a341436))
-* update backport task and docs ([c5f33db](https://github.com/BagelLab/uds-core/commit/c5f33dbbcc55d04cc742baa46b2b79c192a4082c))
-
-
-### Documentation
-
-* update command example ([223391e](https://github.com/BagelLab/uds-core/commit/223391e3870f46c4b2c29a12fda8c463494e5e57))
-
 ## [0.56.0](https://github.com/BagelLab/uds-core/compare/v0.55.1...v0.56.0) (2025-11-13)
 
 

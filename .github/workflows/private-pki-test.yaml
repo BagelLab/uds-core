@@ -31,7 +31,7 @@ jobs:
 
     strategy:
       matrix:
-        flavor: [upstream]
+        flavor: [upstream, registry1, unicorn]
 
     steps:
       - name: Checkout repository

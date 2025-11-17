@@ -162,8 +162,8 @@ jobs:
     name: Schedule
     strategy:
       matrix:
-        package: [all]
-        flavor: [upstream]
+        package: ${{ fromJson(needs.check-paths.outputs.combined) }}
+        flavor: [upstream, registry1, unicorn]
         test_type: [install, upgrade]
     uses: ./.github/workflows/test.yaml
     with:

@@ -30,7 +30,7 @@ jobs:
 
     strategy:
       matrix:
-        flavor: [upstream]
+        flavor: [upstream, registry1, unicorn]
         test-type: [install, upgrade]
 
     steps:

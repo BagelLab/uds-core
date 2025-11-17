@@ -135,8 +135,6 @@ tasks:
             TARGET_VERSION="${BRANCH#release-please--branches--release/}"
           fi
 
-          echo "TARGET_VERSION = ${TARGET_VERSION}"
-
           if [ -n "${TARGET_VERSION}" ]; then
             uds zarf tools registry ls ${TARGET_REPO}/core | grep "${FLAVOR}" | grep -E "^${TARGET_VERSION}\\." | sort -V | tail -1
           else

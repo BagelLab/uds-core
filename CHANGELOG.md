@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 > [!IMPORTANT]
 > This changelog only tracks changes across minor versions and is automatically generated, ensuring all commits are captured. The [GitHub Releases](https://github.com/defenseunicorns/uds-core/releases) provide a summary of changes for each release and list all patch releases as well.
 
+## [0.60.0](https://github.com/BagelLab/uds-core/compare/v0.59.0...v0.60.0) (2025-11-18)
+
+
+### Features
+
+* time for a new release ([15f1b52](https://github.com/BagelLab/uds-core/commit/15f1b5281ebc5470540cb5dc31c408f0efe21bba))
+
+
+### Bug Fixes
+
+* authservice bug ([4618ebe](https://github.com/BagelLab/uds-core/commit/4618ebe73ecf3f69e3388eda8370692602405648))
+* falco validate bug ([0869639](https://github.com/BagelLab/uds-core/commit/0869639aaa316c6f4dcb0ac7a6dd88a981b4b4f9))
+
+
+### Miscellaneous
+
+* updates based on review ([c29e8f0](https://github.com/BagelLab/uds-core/commit/c29e8f0e704de52ea6d90c6d1a03a3aaa3434e5b))
+
 ## [0.59.0](https://github.com/BagelLab/uds-core/compare/v0.58.0...v0.59.0) (2025-11-17)
 
 

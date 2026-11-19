@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Create release tag
         id: tag
-        uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4.4.0
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
         with:
           target-branch: ${{ github.ref_name }}
           config-file: ${{ startsWith(github.ref, 'refs/heads/release/') && 'release-please-config.patch.json' || 'release-please-config.json' }}
@@ -76,7 +76,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
       - name: Create release/X.Y from vX.Y.0

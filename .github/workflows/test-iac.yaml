@@ -52,7 +52,7 @@ jobs:
       distros: ${{ steps.path-filter-iac.outputs.changes }}
     steps:
       - name: Checkout the code
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Check renovate readiness
         if: startsWith(github.event.pull_request.head.ref, 'renovate/') # Only call for Renovate PRs
@@ -62,7 +62,7 @@ jobs:
 
       - name: Check iac distros src paths
         id: path-filter-iac
-        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
         with:
           filters: |
             aks:
